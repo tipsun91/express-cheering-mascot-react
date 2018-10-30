@@ -33,8 +33,7 @@
 Инициализируйте приложение Express следующим образом:
 ```sh
 npm install express-generator -g
-express --view=hbs app
-cd app
+express --view=hbs
 npm install
 ```
 
@@ -43,7 +42,7 @@ npm install
 ### Пререлиз: Запуск сервера
 Чтобы запустить сервер, выполните следующую команду из корневого каталога приложения:
 ```js
- DEBUG=app:* npm start
+ DEBUG=* npm start
 ```
 *Рисунок 1*.  Код для запуска сервера.
 
@@ -54,13 +53,13 @@ npm install
 
 *Рисунок 3*.  Скриншот главной страницы.
 
-Теперь мы можем зайти в наше веб-приложение. Мы можем использовать хост `127.0.0.1`, или ` localhost`, который всегда ссылается на *текущий компьютер*. Откройте браузер и перейдите на страницу http://localhost. Наша страница должна выглядеть примерно так, как показано на рисунке 3.
+Теперь мы можем зайти в наше веб-приложение. Мы можем использовать хост `127.0.0.1`, или ` localhost:3000`, который всегда ссылается на *текущий компьютер*. Откройте браузер и перейдите на страницу http://localhost:3000. Наша страница должна выглядеть примерно так, как показано на рисунке 3.
 
-Итак, что здесь происходит? Когда мы перешли на http://localhost, браузер отправил HTTP-запрос на сервер, который мы запустили. Более конкретно, он сделал запрос `GET` к корневому URL.
+Итак, что здесь происходит? Когда мы перешли на http://localhost:3000, браузер отправил HTTP-запрос на сервер, который мы запустили. Более конкретно, он сделал запрос `GET` к корневому URL.
 
 ```js
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
 
 app.get('/', function (req, res) {
   res.send('Hello World!');
@@ -90,7 +89,7 @@ http://somesite.com/?first_name=Ariel&last_name=Cyrillus
 
 *Рисунок 6*. Скриншот главной страницы с текстом `sign_text=LOUDER`, переданным в строке запроса.
 
-Мы будем использовать ту же технику, чтобы управлять словами, которые появляются на знаке нашего талисмана. Мы добавим пару ключевых значений в нашу строку запроса. Ключ должен быть `sign_text`. Давайте дадим ключу значение `LOUDER` (ГРОМЧЕ). В браузере перейдем к `http://localhost/?sign_text=LOUDER`. Теперь на знаке должен быть текст (см. Рис. 6).
+Мы будем использовать ту же технику, чтобы управлять словами, которые появляются на знаке нашего талисмана. Мы добавим пару ключевых значений в нашу строку запроса. Ключ должен быть `sign_text`. Давайте дадим ключу значение `LOUDER` (ГРОМЧЕ). В браузере перейдем к `http://localhost:3000/?sign_text=LOUDER`. Теперь на знаке должен быть текст (см. Рис. 6).
 
 
 В Release 0 мы обсудили обработчик `GET`, который мы определили для запросов, внесенных в корневой путь нашего приложения. В блоке, который выполняется, когда `GET`-запрос делается на корневой путь (см. Рис. 4), нам еще предстоит обсудить строку `let sign_text = req.query.sign_text`.
@@ -129,7 +128,7 @@ sign_text: "LOUDER"
 
 1. Узнайте, какое название подбадривающего приветствия было отправлено с формой.
 2. Определите, какой знак должен держать талисман исходя из названия приветствия. Помните, что эта работа может быть делегирована модулю `Mascot` (подбадривающего талисмана).
-3. Перенаправить браузер на главную страницу, добавив строку запроса, содержащую текст для отображения на знаке. Когда форма отправлена, браузер должен в конечном итоге оказаться в http://localhost/?sign_text=foobar`, где `foobar` - любой текст, который должен появиться на знаке. Для ознакомления прочитайте документацию Express в [Sinatra documentation][].
+3. Перенаправить браузер на главную страницу, добавив строку запроса, содержащую текст для отображения на знаке. Когда форма отправлена, браузер должен в конечном итоге оказаться в http://localhost:3000/?sign_text=foobar`, где `foobar` - любой текст, который должен появиться на знаке. Для ознакомления прочитайте документацию Express в [Sinatra documentation][].
 
 
 ## Заключение
@@ -209,9 +208,9 @@ When the server starts we should see output similar to that in Figure 2.  The fi
 
 *Figure 3*.  Screenshot of homepage.
 
-We should now be able to visit our web app. Rather than using host `127.0.0.1`, we can use `localhost` which always refers to *the current machine*.  Open the browser and go to `http://localhost:9393`.  Our page should look similar to the screenshot in Figure 3.
+We should now be able to visit our web app. Rather than using host `127.0.0.1`, we can use `localhost:3000` which always refers to *the current machine*.  Open the browser and go to `http://localhost:3000:9393`.  Our page should look similar to the screenshot in Figure 3.
 
-So, what's happening here?  When we went to `http://localhost:9393`, the browser sent an HTTP request to the server that we started.  More specifically, it made a `GET` request to the root URL.
+So, what's happening here?  When we went to `http://localhost:3000:9393`, the browser sent an HTTP request to the server that we started.  More specifically, it made a `GET` request to the root URL.
 
 ```ruby
 get '/' do
@@ -248,7 +247,7 @@ A query string is offset from the rest of the URL by a `?`.  After the `?` are k
 
 *Figure 6*. Screenshot of homepage with `sign_text=LOUDER` passed in the query string.
 
-We're going to use the same technique to control the words that appear on our mascot's sign.  We'll add a key-value pair to our query string.  The key needs to be `sign_text`.  Let's give the key the value `LOUDER`.  In the browser, let's visit `http://localhost:9393/?sign_text=LOUDER`.  There should now be text on the sign (see Figure 6).
+We're going to use the same technique to control the words that appear on our mascot's sign.  We'll add a key-value pair to our query string.  The key needs to be `sign_text`.  Let's give the key the value `LOUDER`.  In the browser, let's visit `http://localhost:3000:9393/?sign_text=LOUDER`.  There should now be text on the sign (see Figure 6).
 
 How did the value from the query string end up on the webpage?  We'll need to take a look at a couple of files:  `app/controllers/index.rb` which we've already seen and `app/views/index.erb`.
 
@@ -287,7 +286,7 @@ Unfortunately, the handler doesn't handle the request in the way we want.  We ne
 
 1. Figure out which cheer name was submitted with the form.
 2. Determine which sign the mascot should hold up based on the cheer name.  Remember, this work can be delegated to the `Mascot` module.
-3. Redirect the browser to the homepage, adding a query string containing the text to display on the sign. When the form is submitted, the browser should ultimately end up at `http://localhost:9393/?sign_text=foobar` where `foobar` is whatever text should appear on the sign. For guidance, read the Sinatra documentation on [browser redirect][].
+3. Redirect the browser to the homepage, adding a query string containing the text to display on the sign. When the form is submitted, the browser should ultimately end up at `http://localhost:3000:9393/?sign_text=foobar` where `foobar` is whatever text should appear on the sign. For guidance, read the Sinatra documentation on [browser redirect][].
 
 
 ## Conclusion
