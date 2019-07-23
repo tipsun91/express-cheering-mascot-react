@@ -14,10 +14,6 @@ app.use(express.urlencoded({extended: true}));
 // json.
 app.use(express.json());
 
-// Импорт маршрутов.
-const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
-
 // Подключаем статику
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -25,10 +21,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-
-// Подключаем импортированные маршруты с определенным url префиксом.
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// Отображаем главную страницу с использованием шаблона "index.hbs"
+app.get('/', function(req, res) {
+    res.render('index', req.query);
+});
 
 // Обработка ошибок.
 app.use((req, res, next) => {
