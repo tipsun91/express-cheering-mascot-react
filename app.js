@@ -18,7 +18,7 @@ app.use(express.urlencoded({extended: true}));
 // распознавания входящего объекта в POST запросе как объекта JSON
 app.use(express.json());
 
-// Подключаем статику
+// Подключаем папку public со статическими файлами (картинки, стили и тп)
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Отображаем главную страницу с использованием шаблона "index.hbs"
