@@ -1,25 +1,25 @@
 // Фреймворк веб-приложений.
 const express = require("express");
-const app = express();
-// HTTP request logger middleware for node.js.
-// Логгирование деталей запросов.
 const morgan = require("morgan");
-app.use(morgan("dev"));
-
 const path = require('path');
 
-// Обработка POST запросов.
-// urlencoded.
-app.use(express.urlencoded({extended: true}));
-// json.
-app.use(express.json());
-
-// Подключаем статику
-app.use(express.static(path.join(__dirname, 'public')));
+const app = express();
 
 // Подключаем views(hbs)
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+
+// Подключаем логгирование деталей запросов.
+app.use(morgan("dev"));
+
+// Обработка POST запросов.
+//распознавания входящего объекта в POST запросе в виде строк или массивов
+app.use(express.urlencoded({extended: true}));
+// распознавания входящего объекта в POST запросе как объекта JSON
+app.use(express.json());
+
+// Подключаем статику
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Отображаем главную страницу с использованием шаблона "index.hbs"
 app.get('/', function(req, res) {
