@@ -5,6 +5,7 @@ const path = require('path');
 
 const app = express();
 
+const PORT = 3000;
 // Подключаем views(hbs)
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -26,20 +27,11 @@ app.get('/', function(req, res) {
     res.render('index', req.query);
 });
 
-// Обработка ошибок.
-app.use((req, res, next) => {
-  const error = new Error("Not found");
-  error.status = 404;
-  next(error);
-});
 
-app.use((error, req, res, next) => {
-  res.status(error.status || 500);
-  res.json({
-    error: {
-      message: error.message
-    }
-  });
-});
 
-module.exports = app;
+
+app.listen(PORT, () => {
+  console.log(`server started port ${PORT}`)
+})
+
+
