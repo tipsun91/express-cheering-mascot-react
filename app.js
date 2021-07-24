@@ -1,37 +1,35 @@
 // Фреймворк веб-приложений.
-const express = require("express");
-const morgan = require("morgan");
+const express = require('express');
+const morgan = require('morgan');
 const path = require('path');
 
 const app = express();
 
 const PORT = 3000;
-// Подключаем views(hbs)
-app.set('views', path.join(__dirname, 'views'));
+// Подключаем views (hbs)
+app.set('views', path.resolve(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 // Подключаем логгирование деталей запросов.
-app.use(morgan("dev"));
+app.use(morgan('dev'));
 
-// Обработка POST запросов.
-//распознавания входящего объекта в POST запросе в виде строк или массивов
-app.use(express.urlencoded({extended: true}));
-// распознавания входящего объекта в POST запросе как объекта JSON
+// Две следующих настройки нужны для того, чтобы мы могли вытащить тело POST-запроса
+// Это нужно не всегда (всё зависит от того, как клиент отправляет запросы),
+// но пока будем использовать всегда — на всякий случай
+
+// Распознавание входящего объекта в POST-запросе в виде строк или массивов
+app.use(express.urlencoded({ extended: true }));
+// Распознавание входящего объекта в POST-запросе как объекта JSON
 app.use(express.json());
 
-// Подключаем папку public со статическими файлами (картинки, стили и тп)
+// Подключаем папку public со статическими файлами (картинки, стили и т.д.)
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Отображаем главную страницу с использованием шаблона "index.hbs"
-app.get('/', function(req, res) {
-    res.render('index', req.query);
+app.get('/', (req, res) => {
+  res.render('index', req.query);
 });
 
-
-
-
 app.listen(PORT, () => {
-  console.log(`server started port ${PORT}`)
-})
-
-
+  console.log(`Server started on port ${PORT}`);
+});
