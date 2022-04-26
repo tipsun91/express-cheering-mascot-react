@@ -6,9 +6,10 @@ const path = require('path');
 const app = express();
 
 const PORT = 3000;
-// Подключаем views (hbs)
+// Подключаем views (React)
 app.set('views', path.resolve(__dirname, 'views'));
-app.set('view engine', 'hbs');
+app.set('view engine', 'jsx');
+app.engine('jsx', require('express-react-views').createEngine());
 
 // Подключаем логгирование деталей запросов.
 app.use(morgan('dev'));
@@ -25,9 +26,9 @@ app.use(express.json());
 // Подключаем папку public со статическими файлами (картинки, стили и т.д.)
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Отображаем главную страницу с использованием шаблона "index.hbs"
+// Отображаем главную страницу с использованием компонента "Main"
 app.get('/', (req, res) => {
-  res.render('index', req.query);
+  res.render('Main', req.query);
 });
 
 app.listen(PORT, () => {
