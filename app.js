@@ -1,15 +1,19 @@
+// Подлкючаем babel для поддержки jsx
+require('@babel/register');
+
 // Фреймворк веб-приложений.
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 
+// Подключаем React и наши views
+const ReactDOMServer = require('react-dom/server');
+const React = require('react');
+const Main = require('./views/Main');
+
 const app = express();
 
 const PORT = 3000;
-// Подключаем views (React)
-app.set('views', path.resolve(__dirname, 'views'));
-app.set('view engine', 'jsx');
-app.engine('jsx', require('express-react-views').createEngine());
 
 // Подключаем логгирование деталей запросов.
 app.use(morgan('dev'));
@@ -28,7 +32,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Отображаем главную страницу с использованием компонента "Main"
 app.get('/', (req, res) => {
-  res.render('Main', req.query);
+  const main = React.createElement(Main, req.query);
+  const html = ReactDOMServer.renderToStaticMarkup(main);
+  res.write('<!DOCTYPE html>');
+  res.end(html);
 });
 
 app.listen(PORT, () => {

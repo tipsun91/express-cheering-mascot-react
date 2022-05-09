@@ -1,5 +1,6 @@
 module.exports = {
   env: {
+    browser: true,
     commonjs: true,
     es2021: true,
     node: true,
@@ -12,7 +13,7 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: 12,
+    ecmaVersion: 'latest',
   },
   plugins: [
     'react',
