@@ -32,9 +32,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Отображаем главную страницу с использованием компонента "Main"
 app.get('/', (req, res) => {
+  // создаём React-элемент на основе React-компонента
   const main = React.createElement(Main, req.query);
+  // рендерим элемент и получаем HTML (в виде строки)
   const html = ReactDOMServer.renderToStaticMarkup(main);
+  // отправляем первую строку нашего HTML-документа
   res.write('<!DOCTYPE html>');
+  // отправляем отрендеренный HTML и закрываем соединение
   res.end(html);
 });
 
