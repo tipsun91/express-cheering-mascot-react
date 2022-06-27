@@ -42,6 +42,32 @@ app.get('/', (req, res) => {
   res.end(html);
 });
 
+app.post('/cheers', (req, res) => {
+  const { cheer_name } = req.body;
+  console.log(cheer_name);
+
+  let signText = '';
+  switch(cheer_name) {
+    case 'RED HOT':
+      signText = 'H-O-T!';
+      break;
+    case 'DO IT AGAIN':
+      signText = 'Go, Fight, Win';
+      break;
+    case '2 BITS':
+      signText = 'Holler!';
+      break;
+    case 'STOMP YOUR FEET':
+      signText = 'STOMP!';
+      break;
+    default:
+      signText = cheer_name;
+      break;
+  }
+
+  res.redirect(`/?signText=${signText}`);
+});
+
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
 });
